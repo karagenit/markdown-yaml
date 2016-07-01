@@ -3,14 +3,21 @@
 # Config
 INPUT=$1
 
+echo "# Table of Contents" > toc.md
+
 function add-header {
 
-	echo "---" > header.tmp
-	head -n 1 $1 >> header.tmp
-	sed -i -E "s/[#]{1,}[ ]{0,}/title: /" header.tmp
+	FILE=$1
+	TITLE=`head -n 1 $FILE | sed -E "s/[#]{1,}[ ]{0,}//"`
+
 	echo "---" >> header.tmp
-	cat $1 >> header.tmp
-	mv header.tmp $1
+	echo "title: $TITLE" >> header.tmp
+	echo "---" >> header.tmp
+	cat $FILE >> header.tmp
+	mv header.tmp $FILE
+
+	echo "[${TITLE}](${FILE})" >> toc.md
+
 }
 
 if [ -f "$INPUT" ]; then

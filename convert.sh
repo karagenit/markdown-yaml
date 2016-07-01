@@ -29,7 +29,7 @@ if [ -f "$INPUT" ]; then
 
 elif [ -d "$INPUT" ]; then
 	
-	for f in $(find $INPUT -name -maxdepth $DEPTH '*.md')
+	for f in $(find $INPUT -name '*.md' -maxdepth $DEPTH)
 	do
 		add-header $f
 	done

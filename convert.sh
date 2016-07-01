@@ -19,6 +19,7 @@ function add-header {
 	cat $FILE >> header.tmp
 	mv header.tmp $FILE
 
+	echo "" >> toc.tmp
 	echo "[${TITLE}](${FILE})" >> toc.tmp
 
 }
@@ -29,7 +30,7 @@ if [ -f "$INPUT" ]; then
 
 elif [ -d "$INPUT" ]; then
 	
-	for f in $(find $INPUT -name '*.md' -maxdepth $DEPTH)
+	for f in $(find $INPUT -maxdepth $DEPTH -name '*.md')
 	do
 		add-header $f
 	done

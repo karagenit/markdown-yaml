@@ -1,9 +1,12 @@
 #!/bin/bash
 
-# Config
+# Input Directory
 INPUT=$1
 
-echo "# Table of Contents" > toc.md
+# How many dirs to recurse into
+DEPTH=1
+
+echo "# Table of Contents" > toc.tmp
 
 function add-header {
 
@@ -16,7 +19,7 @@ function add-header {
 	cat $FILE >> header.tmp
 	mv header.tmp $FILE
 
-	echo "[${TITLE}](${FILE})" >> toc.md
+	echo "[${TITLE}](${FILE})" >> toc.tmp
 
 }
 
@@ -26,7 +29,7 @@ if [ -f "$INPUT" ]; then
 
 elif [ -d "$INPUT" ]; then
 	
-	for f in $(find $INPUT -name '*.md')
+	for f in $(find $INPUT -name -maxdepth $DEPTH '*.md')
 	do
 		add-header $f
 	done
@@ -34,3 +37,6 @@ else
 	echo "Error: Not a valid File or Directory!"
 	echo "Usage: convert [ FILE | DIRECTORY ]"
 fi
+
+# Allows TOC File to be not included in itself
+mv toc.tmp toc.md

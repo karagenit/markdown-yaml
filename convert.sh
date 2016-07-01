@@ -24,6 +24,6 @@ elif [ -d "$INPUT" ]; then
 		add-header $f
 	done
 else
-	echo "Error: No a valid File or Directory!"
+	echo "Error: Not a valid File or Directory!"
 	echo "Usage: convert [ FILE | DIRECTORY ]"
 fi

@@ -5,6 +5,11 @@ function add-header {
 	FILE=$1
 	TITLE=`head -n 1 $FILE | sed -E "s/[#]{1,}[ ]{0,}//"`
 
+	if [ "$TITLE" = "---" ]; then
+		echo "File already had YAML header!"
+		return 1
+	fi
+
 	echo "---" >> header.tmp
 	echo "title: $TITLE" >> header.tmp
 	echo "---" >> header.tmp

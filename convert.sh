@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Input Directory
-INPUT=$1
-
 function add-header {
 
 	FILE=$1
@@ -15,17 +12,25 @@ function add-header {
 	mv header.tmp $FILE
 }
 
-if [ -f "$INPUT" ]; then
-
-	add-header $INPUT
-
-elif [ -d "$INPUT" ]; then
-	
-	for f in $(find $INPUT -name '*.md')
-	do
-		add-header $f
-	done
-else
-	echo "Error: Not a valid File or Directory!"
+if [ ! $1 ]; then
 	echo "Usage: convert [ FILE | DIRECTORY ]"
 fi
+
+while [ $1 ]
+do
+	if [ -f "$1" ]; then
+
+		add-header $1
+
+	elif [ -d "$1" ]; then
+		
+		for f in $(find $1 -name '*.md')
+		do
+			add-header $f
+		done
+	else
+		echo "Error: Not a valid File or Directory!"
+	fi
+
+	shift
+done
